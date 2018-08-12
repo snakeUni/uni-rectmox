@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-const Context = React.createContext(null)
+const { Provider, Consumer } = React.createContext(null)
 
 export class Provider extends Component {
   constructor(props) {
@@ -9,9 +9,9 @@ export class Provider extends Component {
   }
   render() {
     return (
-      <Context.Provider>
+      <Provider>
         {this.props.children}
-      </Context.Provider>
+      </Provider>
     )
   }
 }
