@@ -1,17 +1,18 @@
+/**
+ * 暂无无法对dispatch的函数进行区分是reducers里面还是effects里面
+ * 所以用commit来触发reducers，而用dispatch来触发effects
+ */
 class Store {
   constructor() {
     this.subscribers = []
     this.state = {}
     this.reducers = {}
     this.effects = {}
-    // 通过dispatch来改变值,用法dispatch.count.increase
-    this.dispatch  = {}
   }
   init(models) {
     this.state = models.state || {}
     this.reducers = models.reducers || {}
     this.effects = models.effects || {}
-    this.dispatch = new Store() || {}
   }
 
   subscribe(listener) {
@@ -19,11 +20,18 @@ class Store {
       throw new Error('Expected listener to be a function')
     }
     const that = this
-    this.subscribers.push(callback)
-    return function() {
-      that.subscribes.filter(sub => sub !== callback)
+    this.subscribers.push(listener)
+    return function unsubscribe() {
+      that.subscribes.filter(sub => sub !== listener)
     }
   }
 
-  
+  dispatch() {
+
+  }
+
+  commit() {
+
+  }
+
 }
