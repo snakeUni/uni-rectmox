@@ -1,7 +1,5 @@
-/**
- * 暂无无法对dispatch的函数进行区分是reducers里面还是effects里面
- * 所以用commit来触发reducers，而用dispatch来触发effects
- */
+import { resolveAction } from './utils'
+
 class Store {
   constructor() {
     this.subscribers = []
@@ -26,12 +24,18 @@ class Store {
     }
   }
 
-  dispatch() {
-
+  dispatch(action = {}) {
+    const rootState = this.state
+    const { modelName, modelMethod } = resolveAction(action)
+    if (this.reducers[modelName][modelMethod]) {
+      this.reducers[modelName][modelMethod].call(this, this.state[modelName], action.payload)
+      return
+    }
+    return this.effects[modelName][modelMethod].call(this, action.payload, rootState)
   }
 
-  commit() {
-
+  getState() {
+    return this.state
   }
-
 }
+
