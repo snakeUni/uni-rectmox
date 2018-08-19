@@ -1,8 +1,6 @@
 class State {
   constructor(baseState) {
     this.baseState = baseState
-    this.alternate = null
-    this.modified = false
   }
 
   get(key) {
@@ -23,4 +21,11 @@ const handler = {
   set(target, key, value) {
     return target.set(key, value)
   }
+}
+
+export function produce(baseState, producer) {
+  const state = new State(baseState)
+  const proxy = new Proxy(state, handler)
+  producer(proxy)
+  return proxy.baseState
 }
