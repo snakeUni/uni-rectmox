@@ -1,4 +1,5 @@
 import { resolveAction } from './utils'
+import { produce } from './state'
 
 class Store {
   constructor() {
@@ -28,10 +29,16 @@ class Store {
     const rootState = this.state
     const { modelName, modelMethod } = resolveAction(action)
     if (this.reducers[modelName][modelMethod]) {
-      this.reducers[modelName][modelMethod].call(this, this.state[modelName], action.payload)
+      produce(this.state[modelName], state => {
+        this.reducers[modelName][modelMethod].call(this, state[modelName], action.payload)
+      }) 
+      this.subscribers.forEach(listener => listener())
       return
     }
-    return this.effects[modelName][modelMethod].call(this, action.payload, rootState)
+    produce(this.state[modelName], () => {
+      this.effects[modelName][modelMethod].call(this, action.payload, rootState)
+    })
+    this.subscribers.forEach(listener => listener())
   }
 
   getState() {

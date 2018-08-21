@@ -9,9 +9,20 @@ export class Provider extends Component {
   }
   render() {
     return (
-      <Provider>
+      <Provider value={this.store}>
         {this.props.children}
       </Provider>
     )
+  }
+}
+
+export const map = (state = {}, reducers = {}, effects = {}) => Component => {
+  return class wrapComponent extends Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        mapProps: {}
+      }
+    }
   }
 }
