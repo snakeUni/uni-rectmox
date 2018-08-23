@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { mapProps, mapDispatch } from './utils'
 
 const { Provider, Consumer } = React.createContext(null)
 
@@ -25,6 +26,10 @@ export const map = (namespace, state = [], reducers = [], effects = []) => Compo
       }
       this.namespace = namespace
     }
+
+    componentDidMount() {
+      this.setProps()
+    }
     mapStateToProps = () => {
       const stateToProps = mapProps(this.store.state, state, this.namespace)
       return stateToProps
@@ -38,6 +43,20 @@ export const map = (namespace, state = [], reducers = [], effects = []) => Compo
     mapEffectsToProps = () => {
       const effectsToProps = mapDispatch(this.store.effects, effects, this.namespace)
       return effectsToProps
+    }
+
+    setProps = () => {
+      const stateToProps = this.mapStateToProps()
+      const reducersToProps = this.mapReducersToProps()
+      const effectsToProps = this.mapEffectsToProps()
+      this.setState({
+        mapProps: {
+          ...this.state.mapProps,
+          ...stateToProps,
+          ...reducersToProps,
+          ...effectsToProps
+        }
+      })
     }
     
     render() {
