@@ -8,11 +8,6 @@ class Store {
     this.reducers = {}
     this.effects = {}
   }
-  init(models) {
-    this.state = models.state || {}
-    this.reducers = models.reducers || {}
-    this.effects = models.effects || {}
-  }
 
   subscribe(listener) {
     if (typeof listener !== 'function') {
