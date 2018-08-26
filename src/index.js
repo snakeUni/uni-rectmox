@@ -6,7 +6,7 @@ const { Provider, Consumer } = React.createContext(null)
 export class Provider extends Component {
   constructor(props) {
     super(props)
-    this.store = this.props.store
+    this.store = props.store
   }
   render() {
     return (
@@ -64,7 +64,7 @@ export const map = (namespace, state = [], reducers = [], effects = []) => Compo
         <Consumer>
           {store => {
             this.store = store
-            return <Component {...this.state.mapProps} />
+            return <Component {...this.state.mapProps} store={store}/>
           }}
         </Consumer>
       )
