@@ -9,7 +9,7 @@ class Store {
     this.effects = {}
   }
 
-  subscribe(listener) {
+  subscribe = listener => {
     if (typeof listener !== 'function') {
       throw new Error('Expected listener to be a function')
     }
@@ -21,7 +21,7 @@ class Store {
   }
 
   // dispatch
-  dispatch(action = {}) {
+  dispatch = (action = {}) => {
     const rootState = this.state
     const { modelName, modelMethod } = resolveAction(action)
     const currentReducer = this.reducers[modelName][modelMethod]
@@ -35,12 +35,12 @@ class Store {
     const currentEffect = this.effects[modelName][modelMethod]
     if (currentEffect) {
       this.state[modelName] = produce(this.state[modelName], state => {
-        currentEffect(action.payload, rootState, state)
+        currentEffect(action.payload, this.dispatch, {rootState, state})
       })
       this.subscribers.forEach(listener => listener())
       return
     }
-    throw new Error('function not existed')  
+    throw new Error('function is not existed')  
   }
 
   getState() {
