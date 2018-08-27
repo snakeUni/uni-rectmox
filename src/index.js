@@ -6,7 +6,7 @@ const { Provider, Consumer } = React.createContext(null)
 export class Provider extends Component {
   constructor(props) {
     super(props)
-    this.store = props.store
+    this.store = this.props.store
   }
   render() {
     return (
@@ -28,7 +28,11 @@ export const map = (namespace, state = [], reducers = [], effects = []) => Compo
     }
 
     componentDidMount() {
+      this.unsubscribe = this.store.subscribe(this.setProps)
       this.setProps()
+    }
+    ComponentWillUnMount() {
+      this.unsubscribe()
     }
     mapStateToProps = () => {
       const stateToProps = mapProps(this.store.state, state, this.namespace)
