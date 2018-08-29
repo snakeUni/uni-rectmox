@@ -17,7 +17,7 @@ export class Provider extends Component {
   }
 }
 
-export const map = (namespace, state = [], reducers = [], effects = []) => Component => {
+export const observe = (namespace, state = [], reducers = [], effects = []) => Component => {
   return class wrapComponent extends Component {
     constructor(props) {
       super(props)
