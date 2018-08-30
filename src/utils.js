@@ -39,4 +39,10 @@ function mapDispatch(storeDispatches, currentDispatch, namespace) {
   return dispatchs
 }
 
+function shallowCopy(baseSate) {
+  if (Array.isArray(value)) return value.slice()
+  const target = value.__proto__ === undefined ? Object.create(null) : {}
+  return assign(target, value)
+}
+
 export { resolveAction, mapProps, mapDispatch }
