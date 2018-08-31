@@ -1,16 +1,12 @@
-// 受immerJs的启发
-const PROXY_TARGET = 'proxy_target'
+import { shallowCopy, is } from './utils'
+
+const PROXY_STATE = typeof Symbol !== 'undefined' ? Symbol('remox-proxy-state') : '_$remox_state'
 class State {
   constructor(baseState) {
     this.baseState = baseState
-    this.copy = undefined
-    // 用来判断是否被修改
+    this.copy = null
+    // this tree is modified
     this.modified = false
-    this.finalized = false
-    this.parent = null
-    this.proxies = {}
-    //true: value was assigned to these props, false: was removed
-    this.assigned = {}
   }
 
   get(prop) {
@@ -19,15 +15,19 @@ class State {
   }
 
   set(prop, value) {
-    this.assigned[prop] = true
-    const newState = { [prop]: value }
-    this.baseState = Object.assign({}, this.baseState, newState)
+    if (!this.modified) {
+      if (prop in this.baseState && is(this.baseState[prop], value)) 
+        return true
+      this.markChanged()
+    }
+    this.copy[prop] = value
     return true
   }
 
   markChanged() {
     if (!this.modified) {
-      this.modified = true
+      this.modified = true 
+      this.copy = shallowCopy(this.baseState)
     }
   }
 
@@ -39,7 +39,7 @@ class State {
 
 const handler = {
   get(state, prop) {
-    if (prop === PROXY_TARGET) return state
+    if (prop === PROXY_STATE) return state
     return state.get(prop)
   },
   set(state, prop, value) {
@@ -51,6 +51,9 @@ export function produce(baseState, producer) {
   const state = new State(baseState)
   const proxy = new Proxy(state, handler)
   producer(proxy)
-  const alternateState = proxy[PROXY_TARGET]
+  const alternateState = proxy[PROXY_STATE]
+  if (alternateState.modified) {
+    return alternateState.copy
+  }
   return alternateState.baseState
 }

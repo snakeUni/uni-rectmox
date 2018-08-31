@@ -39,10 +39,33 @@ function mapDispatch(storeDispatches, currentDispatch, namespace) {
   return dispatchs
 }
 
-function shallowCopy(baseSate) {
+function shallowCopy(value) {
   if (Array.isArray(value)) return value.slice()
   const target = value.__proto__ === undefined ? Object.create(null) : {}
   return assign(target, value)
 }
 
-export { resolveAction, mapProps, mapDispatch }
+const assign =
+  Object.assign ||
+  function assign(target, value) {
+    for (let key in value) {
+      if (has(value, key)) {
+        target[key] = value[key]
+      }
+    }
+  return target
+}
+
+function has(thing, prop) {
+  return Object.prototype.hasOwnProperty.call(thing, prop)
+}
+
+function is(x, y) {
+  if (x === y) {
+    return x !== 0 || 1 / x === 1 / y
+  } else {
+    return x !== x && y !== y
+  }
+}
+
+export { resolveAction, mapProps, mapDispatch, shallowCopy, is }
