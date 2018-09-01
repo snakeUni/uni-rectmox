@@ -40,12 +40,12 @@ export const observe = (namespace, state = [], reducers = [], effects = []) => C
     }
 
     mapReducersToProps = () => {
-      const reducersToProps = mapDispatch(this.store.reducers, reducers, this.namespace)
+      const reducersToProps = mapDispatch(this.store.reducers, reducers, this.namespace, this.store.dispatch)
       return reducersToProps
     }
 
     mapEffectsToProps = () => {
-      const effectsToProps = mapDispatch(this.store.effects, effects, this.namespace)
+      const effectsToProps = mapDispatch(this.store.effects, effects, this.namespace, this.store.dispatch)
       return effectsToProps
     }
 

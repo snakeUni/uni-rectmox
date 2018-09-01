@@ -33,14 +33,15 @@ class Store {
       return
     }
     const currentEffect = this.effects[modelName][modelMethod]
+    const payload = action.payload, dispatch = this.dispatch
     if (currentEffect) {
       this.state[modelName] = produce(this.state[modelName], state => {
-        currentEffect(action.payload, this.dispatch, {rootState, state})
+        currentEffect({payload, dispatch, state, rootState})
       })
       this.subscribers.forEach(listener => listener())
       return
     }
-    throw new Error('function is not existed')  
+    throw new Error(`${modelMethod} function not exist in ${modelName}`)  
   }
 
   getState() {

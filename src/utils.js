@@ -24,7 +24,7 @@ function mapProps(storeText, currentState, namespace) {
   return result
 }
 
-function mapDispatch(storeDispatches, currentDispatch, namespace) {
+function mapDispatch(storeDispatches, currentDispatch, namespace, dispatch) {
   if (typeof namespace !== 'string') {
     throw new Error('namespace must be string')
   }
@@ -33,8 +33,14 @@ function mapDispatch(storeDispatches, currentDispatch, namespace) {
   }
   const dispatchs = {}
   const currentStoreDispatch = storeDispatches[namespace]
-  currentDispatch.forEach(dispatch => {
-    dispatchs[dispatch] = currentStoreDispatch[dispatch]
+  currentDispatch.forEach(dispatchItem => {
+    if (currentStoreDispatch.hasOwnProperty(dispatchItem)) {
+      dispatchs[dispatchItem] = payload => {
+        dispatch({ type: `${namespace}/${dispatchItem}`, payload: payload })
+      }
+    } else {
+      throw new Error(`${dispatchItem} function is not defined`)
+    }
   })
   return dispatchs
 }
