@@ -14,7 +14,8 @@
     "clean": "nwb clean-module",
     "test": "echo nwb test",
     "test:coverage": "nwb test --coverage",
-    "test:watch": "nwb test --server"
+    "test:watch": "nwb test --server",
+    "jest": "jest"
   },
   "keywords": [],
   "author": "uni",
