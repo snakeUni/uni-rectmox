@@ -1,5 +1,5 @@
-import { resolveAction } from './utils'
 import { produce } from './state'
+import { resolveAction } from './utils'
 
 class Store {
   constructor() {
