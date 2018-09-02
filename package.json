@@ -2,9 +2,19 @@
   "name": "remox",
   "version": "1.0.0",
   "description": "remox",
-  "main": "./dist/remox.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "es",
+    "lib",
+    "umd"
+  ],
   "scripts": {
-    "build": "rollup -c"
+    "build": "nwb build-web-module",
+    "clean": "nwb clean-module",
+    "test": "echo nwb test",
+    "test:coverage": "nwb test --coverage",
+    "test:watch": "nwb test --server"
   },
   "keywords": [],
   "author": "uni",
@@ -16,6 +26,8 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "react": "^16.3.0"
+    "jest": "^23.5.0",
+    "react": "^16.3.0",
+    "nwb": "0.23.0"
   }
 }
