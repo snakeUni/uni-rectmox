@@ -7,9 +7,12 @@ class Store {
     this.state = {}
     this.reducers = {}
     this.effects = {}
+    this.subscribe = this.subscribe.bind(this)
+    this.dispatch = this.dispatch.bind(this)
+    this.getState = this.getState.bind(this)
   }
 
-  subscribe = listener => {
+  subscribe(listener){
     if (typeof listener !== 'function') {
       throw new Error('Expected listener to be a function')
     }
@@ -21,7 +24,7 @@ class Store {
   }
 
   // dispatch
-  dispatch = (action = {}) => {
+  dispatch(action = {}){
     const rootState = this.state
     const { modelName, modelMethod } = resolveAction(action)
     const currentReducer = this.reducers[modelName][modelMethod]

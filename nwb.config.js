@@ -3,5 +3,11 @@ module.exports = {
   npm: {
       esModules: true,
       umd: false
-  }
+  },
+  babel: {
+      "presets": [
+        "env",
+        "react"
+      ]
+    }
 }

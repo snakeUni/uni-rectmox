@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { mapProps, mapDispatch } from './utils'
 
-const { Provider, Consumer } = React.createContext(null)
+const Context = React.createContext(null)
 
 export class Provider extends Component {
   constructor(props) {
@@ -10,9 +10,9 @@ export class Provider extends Component {
   }
   render() {
     return (
-      <Provider value={this.store}>
+      <Context.Provider value={this.store}>
         {this.props.children}
-      </Provider>
+      </Context.Provider>
     )
   }
 }
@@ -34,22 +34,22 @@ export const observe = (namespace, state = [], reducers = [], effects = []) => C
     ComponentWillUnMount() {
       this.unsubscribe()
     }
-    mapStateToProps = () => {
+    mapStateToProps() {
       const stateToProps = mapProps(this.store.state, state, this.namespace)
       return stateToProps
     }
 
-    mapReducersToProps = () => {
+    mapReducersToProps() {
       const reducersToProps = mapDispatch(this.store.reducers, reducers, this.namespace, this.store.dispatch)
       return reducersToProps
     }
 
-    mapEffectsToProps = () => {
+    mapEffectsToProps() {
       const effectsToProps = mapDispatch(this.store.effects, effects, this.namespace, this.store.dispatch)
       return effectsToProps
     }
 
-    setProps = () => {
+    setProps() {
       const stateToProps = this.mapStateToProps()
       const reducersToProps = this.mapReducersToProps()
       const effectsToProps = this.mapEffectsToProps()
@@ -65,12 +65,12 @@ export const observe = (namespace, state = [], reducers = [], effects = []) => C
     
     render() {
       return (
-        <Consumer>
+        <Context.Consumer>
           {store => {
             this.store = store
             return <Component {...this.state.mapProps} store={store}/>
           }}
-        </Consumer>
+        </Context.Consumer>
       )
     }
   }

@@ -15,7 +15,8 @@
     "test": "echo nwb test",
     "test:coverage": "nwb test --coverage",
     "test:watch": "nwb test --server",
-    "jest": "jest"
+    "jest": "jest",
+    "cov": "yarn jest -- --coverage"
   },
   "keywords": [],
   "author": "uni",
@@ -26,9 +27,10 @@
     "babel-jest": "^23.0.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
+    "enzyme": "^3.5.1",
     "jest": "^23.5.0",
+    "nwb": "0.23.0",
     "react": "^16.3.0",
-    "nwb": "0.23.0"
+    "react-test-renderer": "^16.4.2"
   }
 }
