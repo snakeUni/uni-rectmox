@@ -9,14 +9,14 @@ function resolveAction(action = {}) {
   }
 }
 
-function mapProps(storeText, currentState, namespace) {
-  if (typeof namespace !== 'string') {
-    throw new Error('namespace must be string')
+function mapProps(storeText, currentState, modelName) {
+  if (typeof modelName !== 'string') {
+    throw new Error('modelName must be string')
   }
   if (!Array.isArray(currentState)) {
     throw new Error('state must be a array')
   }
-  const currentStoreState = storeText[namespace]
+  const currentStoreState = storeText[modelName]
   const result = {}
   currentState.forEach(state => {
     result[state] = currentStoreState[state]
@@ -24,19 +24,19 @@ function mapProps(storeText, currentState, namespace) {
   return result
 }
 
-function mapDispatch(storeDispatches, currentDispatch, namespace, dispatch) {
-  if (typeof namespace !== 'string') {
-    throw new Error('namespace must be string')
+function mapDispatch(storeDispatches, currentDispatch, modelName, dispatch) {
+  if (typeof modelName !== 'string') {
+    throw new Error('modelName must be string')
   }
   if (!Array.isArray(currentDispatch)) {
     throw new Error('state must be a array')
   }
   const dispatchs = {}
-  const currentStoreDispatch = storeDispatches[namespace]
+  const currentStoreDispatch = storeDispatches[modelName]
   currentDispatch.forEach(dispatchItem => {
     if (currentStoreDispatch.hasOwnProperty(dispatchItem)) {
       dispatchs[dispatchItem] = payload => {
-        dispatch({ type: `${namespace}/${dispatchItem}`, payload: payload })
+        dispatch({ type: `${modelName}/${dispatchItem}`, payload: payload })
       }
     } else {
       throw new Error(`${dispatchItem} function is not defined`)

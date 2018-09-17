@@ -17,14 +17,14 @@ export class Provider extends Component {
   }
 }
 
-export const observe = ({ namespace, state = [], reducers = [], effects = [] }) => Component => {
+export const observe = ({ modelName, state = [], reducers = [], effects = [] }) => Component => {
   return class wrapComponent extends Component {
     constructor(props) {
       super(props)
       this.state = {
         mapProps: {}
       }
-      this.namespace = namespace
+      this.modelName = modelName
     }
 
     componentDidMount() {
@@ -35,17 +35,17 @@ export const observe = ({ namespace, state = [], reducers = [], effects = [] }) 
       this.unsubscribe()
     }
     mapStateToProps() {
-      const stateToProps = mapProps(this.store.state, state, this.namespace)
+      const stateToProps = mapProps(this.store.state, state, this.modelName)
       return stateToProps
     }
 
     mapReducersToProps() {
-      const reducersToProps = mapDispatch(this.store.reducers, reducers, this.namespace, this.store.dispatch)
+      const reducersToProps = mapDispatch(this.store.reducers, reducers, this.modelName, this.store.dispatch)
       return reducersToProps
     }
 
     mapEffectsToProps() {
-      const effectsToProps = mapDispatch(this.store.effects, effects, this.namespace, this.store.dispatch)
+      const effectsToProps = mapDispatch(this.store.effects, effects, this.modelName, this.store.dispatch)
       return effectsToProps
     }
 
