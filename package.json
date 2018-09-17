@@ -1,6 +1,6 @@
 {
   "name": "rectmox",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "rectmox",
   "main": "lib/index.js",
   "module": "es/index.js",
