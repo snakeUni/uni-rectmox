@@ -25,6 +25,10 @@ export const observe = ({ modelName, state = [], reducers = [], effects = [] }) 
         mapProps: {}
       }
       this.modelName = modelName
+      this.mapStateToProps = this.mapStateToProps.bind(this)
+      this.mapReducersToProps = this.mapReducersToProps.bind(this)
+      this.mapEffectsToProps = this.mapEffectsToProps.bind(this)
+      this.setProps = this.setProps.bind(this)
     }
 
     componentDidMount() {
