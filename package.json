@@ -1,7 +1,7 @@
 {
-  "name": "remox",
+  "name": "rectmox",
   "version": "1.0.0",
-  "description": "remox",
+  "description": "rectmox",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
