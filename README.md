@@ -1,3 +1,3 @@
-# remox
-一个状态管理工具
-remox  采用最新的react context api以及 es6的 proxy
+# Rectmox
+
+[![Build Status](https://travis-ci.org/snakeUni/rectmox.svg?branch=master)](https://travis-ci.org/snakeUni/rectmox)
