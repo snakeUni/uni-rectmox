@@ -19,6 +19,10 @@ npm install rectmox or yarn add rectmox
 ### 在顶层用provide包裹，初始化store
 ```
 import { init, Provide } from reactmox
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './app.js
+
 const count = {
   state: {number: 1},
   reducers: {
@@ -33,17 +37,21 @@ const count = {
             resolve();
         }, 2000);
       }).then(() => {
-          dispatch({type: 'model/increment', payload });
+          dispatch({type: 'count/increment', payload });
       });
     }
   }
 }
-const store = init{{count}}
+
+const store = init({count})
+
 ReactDOM.render(
-  <Provider store={store}><App /></Provider>, 
+  <Provider store={store}>
+    <App />
+  </Provider>, 
   document.getElementById('root'));
 ```
-### 业务代码中使用
+### app.js
 ```
 import React, { Component } from 'react';
 import { observe } from 'rectmox';
@@ -90,3 +98,16 @@ class Demo extends Component {
 
 export default Demo;
 ```
+## Api
+init
+observe
+store.dispatch()    
+store.getState()
+store.state
+store.reducers
+store.effects
+store.subscribers
+
+## 开源协议 
+
+MIT
