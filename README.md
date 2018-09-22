@@ -107,6 +107,7 @@ init({ model1, model2, model3, ...model})
 #### store.dispatch()
 ```
 store.dispath({type: 'modelName/function', payload: 1})
+通过dispatch来更新state
 modelName 为此模块的名称，比如模块名称叫count
 function 即为reducers or effects的函数
 可参照@observe的用法
@@ -131,6 +132,23 @@ observe()
 #### store.getState
 ```
 store.getState() 获取全部的state
+```
+## model写法
+```
+const modelName = {
+  state: { number1 },
+  reducers: {
+    function1: (state, payload) => {},
+    function2: (state, payload) => {}
+  },
+  effects: {
+    asyncFunction1: ({payload, dispatch, rootState }) => {},
+    asyncFunction2: ({payload, dispatch, rootState }) => {}
+  }
+}
+
+reducers中的state即为上下的state
+effects里有一个对象参数,有payload, dispatch, rootState
 ```
 
 ## 开源协议 
