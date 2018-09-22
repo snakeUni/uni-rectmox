@@ -15,3 +15,30 @@ npm install rectmox or yarn add rectmox
 - [x] 和rematch具有相似的api
 - [x] 使用es6的proxy，使用起来更为简单
 
+## 使用
+```
+import { init, Provide } from reactmox
+const model = {
+  state: {number: 1},
+  renducers: {
+    increase:(state, payload) => {
+      state.number += payload
+    }
+  },
+  effects: {
+    assncIncrease: ({payload, dispatch}) => {
+      new Promise(resolve => {
+        setTimeout(() => {
+            resolve();
+        }, 2000);
+      }).then(() => {
+          dispatch({type: 'model/increment', payload });
+      });
+    }
+  }
+}
+const store = init{{model}}
+ReactDOM.render(
+  <Provider store={store}><App /></Provider>, 
+  document.getElementById('root'));
+```
