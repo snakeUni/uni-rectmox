@@ -81,7 +81,9 @@ class Demo extends Component {
     }
 
     asyncIncrease = () => {
-        this.store.dispatch({ type: 'count/aysncIncrement', payload: 1 });
+        const props = this.props;
+        props.aysncIncrement(1);
+        //this.store.dispatch({ type: 'count/aysncIncrement', payload: 1 });
     }
     render() {
         const props = this.props;
