@@ -16,17 +16,18 @@ npm install rectmox or yarn add rectmox
 - [x] 使用es6的proxy，使用起来更为简单
 
 ## 使用
+### 在顶层用provide包裹，初始化store
 ```
 import { init, Provide } from reactmox
-const model = {
+const count = {
   state: {number: 1},
-  renducers: {
+  reducers: {
     increase:(state, payload) => {
       state.number += payload
     }
   },
   effects: {
-    assncIncrease: ({payload, dispatch}) => {
+    asyncIncrease: ({payload, dispatch}) => {
       new Promise(resolve => {
         setTimeout(() => {
             resolve();
@@ -37,8 +38,55 @@ const model = {
     }
   }
 }
-const store = init{{model}}
+const store = init{{count}}
 ReactDOM.render(
   <Provider store={store}><App /></Provider>, 
   document.getElementById('root'));
+```
+### 业务代码中使用
+```
+import React, { Component } from 'react';
+import { observe } from 'rectmox';
+
+@observe({
+    modelName: 'count',
+    state: ['number'],
+    reducers: ['increment', 'decrement'],
+    effects: ['aysncIncrement']
+})
+class Demo extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    //两种方法都可以
+    increment = () => {
+        // this.store.dispatch({ type: 'count/increment', payload: 1 });
+        const props = this.props;
+        props.increment(1);
+    }
+
+    decrement = () => {
+        const props = this.props;
+        props.decrement(1);
+        // this.store.dispatch({ type: 'count/decrement', payload: 1 });
+    }
+
+    asyncIncrease = () => {
+        this.store.dispatch({ type: 'count/aysncIncrement', payload: 1 });
+    }
+    render() {
+        const props = this.props;
+        return (
+            <div>
+                <button onClick={this.increment}>点击增加</button>
+                <button onClick={this.decrement}>点击减少</button>
+                <button onClick={this.asyncIncrease}>异步增加</button>
+                {props.number}
+            </div>
+        );
+    }
+}
+
+export default Demo;
 ```
