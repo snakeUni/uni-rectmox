@@ -104,7 +104,23 @@ export default Demo;
 init用来初始化model，每个model都是一个文件。多个model的话就可以写成
 init({ model1, model2, model3, ...model})
 ```
-
+#### dispatch
+```
+store.dispath({type: 'modelName/function', payload: 1})
+modelName 为此模块的名称，比如模块名称叫count
+function 即为reducers or effects的函数
+可参照@observe的用法
+```
+#### observe
+```
+@observe({
+  modelName: 'count',
+  state: ['number'],
+  reducers: ['increment', 'decrement'],
+  effects: ['aysncIncrement']
+})
+observe()
+```
 
 ## 开源协议 
 
