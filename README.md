@@ -99,14 +99,12 @@ class Demo extends Component {
 export default Demo;
 ```
 ## Api
-init
-observe
-store.dispatch()    
-store.getState()
-store.state
-store.reducers
-store.effects
-store.subscribers
+#### init
+```
+init用来初始化model，每个model都是一个文件。多个model的话就可以写成
+init({ model1, model2, model3, ...model})
+```
+
 
 ## 开源协议 
 
