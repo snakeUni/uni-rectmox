@@ -18,7 +18,7 @@ npm install rectmox or yarn add rectmox
 ## 使用
 ### 在顶层用provide包裹，初始化store
 ```
-import { init, Provide } from reactmox
+import { init, Provide } from 'reactmox'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './app.js
