@@ -26,12 +26,15 @@ import App from './app.js
 const count = {
   state: {number: 1},
   reducers: {
-    increase:(state, payload) => {
+    increment:(state, payload) => {
       state.number += payload
+    },
+    decrement:(state, payload) => {
+      state.number -= payload
     }
   },
   effects: {
-    asyncIncrease: ({payload, dispatch}) => {
+    aysncIncrement: ({payload, dispatch}) => {
       new Promise(resolve => {
         setTimeout(() => {
             resolve();
